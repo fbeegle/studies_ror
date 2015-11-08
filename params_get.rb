@@ -1,27 +1,34 @@
-# When a parameter is passed by
-# URL like that: /contacts?subject=Budget
+# when a parameter is passed by
+# url like that: /contacts?subject=Budget
 
-# Is created a hash called params:
+# is created a hash called params:
 params = {subject: "Budget"}
 
-# Than I can use in a DB:
+# than I can use in a DB:
 @contact = Contact.create(subject: params[:subject])
 
-# However, often we will se something like
+# however, often we will see something like
 # /contacts?contact[subject]=Budget
 
-# And my param will look like:
+# and my param will look like:
 params = {contact: {subject: "Budget"}}
 
-# And we will use:
+# we will use:
 @contact = Contact.new(contact: params[:contact][:subject])
 
-# For lucky, exist a alternative (and better) syntax,
+# for lucky, exist a alternative (and better) syntax,
 # than will maping our DB properties and agree w/ the
 # params hash:
 @contact = Contact.new(params[:contact])
 
 
-# Avoiding a harmful user input we use something
-# Strong Paramaters, which blocks this security error
-@contact = Contact.new(params[:contact].require(:contact).permit(:subject))
+# avoiding a harmful user input we use something called
+# Strong Paramaters, which blocks this security error.
+# see how this works with a method
+@contact = Contact.new(contact_params)
+
+def contact_params
+  params[:contact]
+    .require(:contact)
+    .permit(:subject)
+end
