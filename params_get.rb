@@ -1,5 +1,6 @@
 # when a parameter is passed by
 # url like that: /contacts?subject=Budget
+# (when a invite method is get)
 
 # is created a hash called params:
 params = {subject: "Budget"}
